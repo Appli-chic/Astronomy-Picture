@@ -12,7 +12,7 @@ data class Entry(
 
     val explanation: String,
 
-    val copyright: String,
+    val copyright: String?,
 
     @PrimaryKey
     val date: Calendar = Calendar.getInstance(),
@@ -21,5 +21,5 @@ data class Entry(
 
     @ColumnInfo(name = "hd_url")
     @field:SerializedName("hdurl")
-    val hdUrl: String
+    val hdUrl: String?
 )

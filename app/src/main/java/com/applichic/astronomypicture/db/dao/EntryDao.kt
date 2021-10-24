@@ -12,6 +12,6 @@ interface EntryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(entries: List<Entry>)
 
-    @Query("SELECT * FROM entries")
+    @Query("SELECT * FROM entries order by date DESC")
     fun getAll(): LiveData<List<Entry>>
 }

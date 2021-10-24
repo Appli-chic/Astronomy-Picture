@@ -1,4 +1,4 @@
-package com.applichic.astronomypicture.utils
+package com.applichic.astronomypicture.utils.network
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer

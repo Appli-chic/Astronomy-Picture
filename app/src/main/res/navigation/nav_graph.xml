@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainBottomNavigationFragment">
+
+    <fragment
+        android:id="@+id/mainBottomNavigationFragment"
+        android:name="com.applichic.astronomypicture.ui.MainBottomNavigationFragment"
+        android:label="fragment_main_bottom_navigation"
+        tools:layout="@layout/fragment_main_bottom_navigation" >
+        <action
+            android:id="@+id/action_mainBottomNavigationFragment_to_entryDetailFragment"
+            app:destination="@id/entryDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/entryDetailFragment"
+        android:name="com.applichic.astronomypicture.ui.EntryDetailFragment"
+        android:label="fragment_entry_detail"
+        tools:layout="@layout/fragment_entry_detail" />
+
+</navigation>

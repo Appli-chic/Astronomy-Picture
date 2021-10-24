@@ -1,4 +1,4 @@
-package com.applichic.astronomypicture.utils
+package com.applichic.astronomypicture.utils.network
 
 enum class Status {
     SUCCESS,

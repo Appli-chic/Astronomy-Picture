@@ -5,8 +5,8 @@ import com.applichic.astronomypicture.api.EntryApi
 import com.applichic.astronomypicture.db.dao.EntryDao
 import com.applichic.astronomypicture.db.model.Entry
 import com.applichic.astronomypicture.di.AppExecutors
-import com.applichic.astronomypicture.utils.NetworkBoundResource
-import com.applichic.astronomypicture.utils.Resource
+import com.applichic.astronomypicture.utils.network.NetworkBoundResource
+import com.applichic.astronomypicture.utils.network.Resource
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,7 +27,7 @@ class EntryRepository @Inject constructor(
 
             override fun loadFromDb() = entryDao.getAll()
 
-            override fun createCall() = entryApi.getEntries(startDate = "2021-10-21", endDate = "2021-10-22")
+            override fun createCall() = entryApi.getEntries(startDate = "2021-08-01", endDate = "2021-10-24")
         }.asLiveData()
     }
 }
