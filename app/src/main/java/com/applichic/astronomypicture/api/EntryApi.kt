@@ -1,11 +1,14 @@
 package com.applichic.astronomypicture.api
 
 import androidx.lifecycle.LiveData
+import com.applichic.astronomypicture.BuildConfig
 import com.applichic.astronomypicture.db.model.Entry
+import com.applichic.astronomypicture.db.model.MediaType
 import com.applichic.astronomypicture.utils.ApiResponse
 import com.applichic.astronomypicture.utils.BASE_URL
-import com.applichic.astronomypicture.utils.CalendarFromStringJsonDeserializer
-import com.applichic.astronomypicture.utils.LiveDataCallAdapterFactory
+import com.applichic.astronomypicture.utils.network.CalendarFromStringJsonDeserializer
+import com.applichic.astronomypicture.utils.network.LiveDataCallAdapterFactory
+import com.applichic.astronomypicture.utils.network.MediaTypeFromStringJsonDeserializer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
@@ -21,9 +24,10 @@ interface EntryApi {
 
     @GET("apod")
     fun getEntries(
-        @Query("api_key") clientId: String = "DEMO_KEY",
+        @Query("api_key") clientId: String = BuildConfig.ACCESS_KEY,
         @Query("start_date") startDate: String,
         @Query("end_date") endDate: String,
+        @Query("thumbs") thumbs: Boolean = true,
     ): LiveData<ApiResponse<List<Entry>>>
 
     companion object {
@@ -35,6 +39,10 @@ interface EntryApi {
                 .registerTypeAdapter(
                     Calendar::class.java,
                     CalendarFromStringJsonDeserializer()
+                )
+                .registerTypeAdapter(
+                    MediaType::class.java,
+                    MediaTypeFromStringJsonDeserializer()
                 )
                 .create()
 

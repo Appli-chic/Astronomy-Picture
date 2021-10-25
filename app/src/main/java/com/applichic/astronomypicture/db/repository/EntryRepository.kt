@@ -5,8 +5,11 @@ import com.applichic.astronomypicture.api.EntryApi
 import com.applichic.astronomypicture.db.dao.EntryDao
 import com.applichic.astronomypicture.db.model.Entry
 import com.applichic.astronomypicture.di.AppExecutors
-import com.applichic.astronomypicture.utils.NetworkBoundResource
-import com.applichic.astronomypicture.utils.Resource
+import com.applichic.astronomypicture.utils.ApiResponse
+import com.applichic.astronomypicture.utils.DateConverter
+import com.applichic.astronomypicture.utils.network.NetworkBoundResource
+import com.applichic.astronomypicture.utils.network.Resource
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,8 +19,7 @@ class EntryRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val entryApi: EntryApi
 ) {
-
-    fun getAll(): LiveData<Resource<List<Entry>>> {
+    fun getFromPeriod(startDate: Calendar, endDate: Calendar): LiveData<Resource<List<Entry>>> {
         return object : NetworkBoundResource<List<Entry>, List<Entry>>(appExecutors) {
             override fun saveCallResult(item: List<Entry>) {
                 entryDao.insertAll(item)
@@ -25,9 +27,14 @@ class EntryRepository @Inject constructor(
 
             override fun shouldFetch(data: List<Entry>?) = true
 
-            override fun loadFromDb() = entryDao.getAll()
+            override fun loadFromDb() = entryDao.getFromPeriod(startDate, endDate)
 
-            override fun createCall() = entryApi.getEntries(startDate = "2021-10-21", endDate = "2021-10-22")
+            override fun createCall(): LiveData<ApiResponse<List<Entry>>> {
+                return entryApi.getEntries(
+                    startDate = DateConverter.calendarToDateString(startDate),
+                    endDate = DateConverter.calendarToDateString(endDate),
+                )
+            }
         }.asLiveData()
     }
 }

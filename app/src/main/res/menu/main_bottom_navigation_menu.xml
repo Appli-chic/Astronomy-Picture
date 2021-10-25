@@ -4,11 +4,11 @@
         android:id="@+id/main_entry_list"
         android:enabled="true"
         android:icon="@drawable/ic_photo"
-        android:title="Photos"/>
+        android:title="@string/photos"/>
 
     <item
-        android:id="@+id/main_favorite"
+        android:id="@+id/main_favorite_list"
         android:enabled="true"
         android:icon="@drawable/ic_favorite"
-        android:title="Favoris"/>
+        android:title="@string/favorites"/>
 </menu>
