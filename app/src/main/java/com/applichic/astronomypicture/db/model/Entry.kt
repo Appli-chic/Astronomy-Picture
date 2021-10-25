@@ -6,6 +6,11 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
+enum class MediaType {
+    Image,
+    Video
+}
+
 @Entity(tableName = "entries")
 data class Entry(
     val title: String,
@@ -21,5 +26,13 @@ data class Entry(
 
     @ColumnInfo(name = "hd_url")
     @field:SerializedName("hdurl")
-    val hdUrl: String?
+    val hdUrl: String?,
+
+    @ColumnInfo(name =  "media_type")
+    @field:SerializedName( "media_type")
+    val mediaType: MediaType?,
+
+    @ColumnInfo(name =  "thumbnail_url")
+    @field:SerializedName( "thumbnail_url")
+    val thumbnailUrl: String?
 )

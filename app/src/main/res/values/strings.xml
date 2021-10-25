@@ -3,4 +3,6 @@
     <string name="photos">Photos</string>
     <string name="favorites">Favorites</string>
     <string name="description_photo_space">Photo of astronomy</string>
+    <string name="retry">Retry</string>
+    <string name="network_error_message">Impossible to retrieve data from the server</string>
 </resources>
