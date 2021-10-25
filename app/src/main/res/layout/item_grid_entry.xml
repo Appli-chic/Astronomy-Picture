@@ -10,7 +10,7 @@
     </data>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_grid_entry"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_margin="3dp"

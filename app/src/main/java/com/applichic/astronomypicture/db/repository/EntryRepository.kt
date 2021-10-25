@@ -19,7 +19,7 @@ class EntryRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val entryApi: EntryApi
 ) {
-    fun getAll(startDate: Calendar, endDate: Calendar): LiveData<Resource<List<Entry>>> {
+    fun getFromPeriod(startDate: Calendar, endDate: Calendar): LiveData<Resource<List<Entry>>> {
         return object : NetworkBoundResource<List<Entry>, List<Entry>>(appExecutors) {
             override fun saveCallResult(item: List<Entry>) {
                 entryDao.insertAll(item)

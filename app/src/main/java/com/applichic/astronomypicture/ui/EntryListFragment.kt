@@ -17,7 +17,7 @@ import com.applichic.astronomypicture.utils.network.Status
 import com.applichic.astronomypicture.viewmodel.EntryListViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.security.KeyStore
+import androidx.recyclerview.widget.RecyclerView
 
 
 @AndroidEntryPoint
@@ -26,6 +26,10 @@ class EntryListFragment : Fragment() {
 
     private val viewModel: EntryListViewModel by viewModels()
 
+    private var pastVisibleItems: Int = 0
+    private var visibleItemCount: Int = 0
+    private var totalItemCount: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,21 +37,48 @@ class EntryListFragment : Fragment() {
         binding = FragmentEntryListBinding.inflate(inflater, container, false)
 
         val adapter = EntryGridAdapter(activity as AppCompatActivity)
+        val layoutManager = GridLayoutManager(context, 3)
         binding.recyclerViewPhotos.adapter = adapter
-        binding.recyclerViewPhotos.layoutManager = GridLayoutManager(context, 3)
+        binding.recyclerViewPhotos.layoutManager = layoutManager
+
+        // Load more with scroll
+        binding.recyclerViewPhotos.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    visibleItemCount = layoutManager.childCount
+                    totalItemCount = layoutManager.itemCount
+                    pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
+
+                    if (!viewModel.isLoading) {
+                        if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                            viewModel.loadMore()
+                        }
+                    }
+                }
+            }
+        })
 
         // Load the entries
         viewModel.entries.observe(viewLifecycleOwner, { response ->
             if (response.status == Status.ERROR) {
+                binding.progressBarEntries.visibility = View.GONE
+                viewModel.isLoading = false
                 showErrorLoading()
             }
 
-            if (response.status == Status.LOADING && response.data != null && response.data.isNotEmpty()) {
-                adapter.submitList(getEntriesToDisplay(response.data))
-            }
+            if ((response.status == Status.SUCCESS || response.status == Status.LOADING) &&
+                response.data != null && response.data.isNotEmpty()
+            ) {
+                binding.progressBarEntries.visibility = View.GONE
+                viewModel.isLoading = false
 
-            if (response.status == Status.SUCCESS && response.data != null && response.data.isNotEmpty()) {
-                adapter.submitList(getEntriesToDisplay(response.data))
+                if (adapter.itemCount == 0) {
+                    adapter.submitList(getEntriesToDisplay(response.data))
+                } else {
+                    val newList = getEntriesToDisplay(response.data)
+                    newList.addAll(0, adapter.currentList)
+                    adapter.submitList(newList)
+                }
             }
         })
 
@@ -61,26 +92,27 @@ class EntryListFragment : Fragment() {
      * - Video without thumbnails
      * - Video that are web pages
      */
-    private fun getEntriesToDisplay(entries: List<Entry>): List<Entry> {
+    private fun getEntriesToDisplay(entries: List<Entry>): MutableList<Entry> {
         return entries.filter { entry ->
             entry.mediaType == MediaType.Image ||
                     (entry.mediaType == MediaType.Video && entry.thumbnailUrl != null && !entry.url.endsWith(
                         ".html"
                     ))
-        }
+        }.toMutableList()
     }
 
     /**
      * Displays a snack bar to show an error happened while loading the entries
      */
     private fun showErrorLoading() {
-        val snackbar =  Snackbar.make(binding.root, R.string.network_error_message, Snackbar.LENGTH_LONG)
-            .setAction(R.string.retry) {
-                // Retry to load entries
-            }
+        val snackbar =
+            Snackbar.make(binding.root, R.string.network_error_message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry) {
+                    // Retry to load entries
+                    viewModel.reloadEntries()
+                }
 
         snackbar.anchorView = activity?.findViewById(R.id.bottom_navigation)
         snackbar.show()
     }
-
 }

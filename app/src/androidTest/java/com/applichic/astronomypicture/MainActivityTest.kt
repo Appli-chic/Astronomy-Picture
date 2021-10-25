@@ -17,7 +17,6 @@ class MainActivityTest {
 
     @Test
     fun checkBottomNavigationIsDisplayed() {
-        val scenario = rule.scenario
         onView(withId(R.id.bottom_navigation)).check(matches(isDisplayed()))
     }
 }

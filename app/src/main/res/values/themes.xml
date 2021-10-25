@@ -14,6 +14,9 @@
         <item name="snackbarTextViewStyle">@style/Theme.AstronomyPicture.Snackbar.TextView</item>
         <item name="snackbarButtonStyle">@style/Theme.AstronomyPicture.Snackbar.textButton</item>
 
+        <!-- Progress bar-->
+        <item name="circularProgressIndicatorStyle">@style/Theme.AstronomyPicture.CircularProgressIndicator</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/surface</item>
     </style>
@@ -30,7 +33,7 @@
         <item name="colorSurface">@color/surface</item>
     </style>
 
-    <!-- Snackbar -->
+    <!-- Snack bar -->
     <style name="Theme.AstronomyPicture.Snackbar" parent="Widget.MaterialComponents.Snackbar">
         <item name="backgroundTint">@color/surface</item>
         <item name="actionTextColorAlpha">1</item>
@@ -43,5 +46,10 @@
 
     <style name="Theme.AstronomyPicture.Snackbar.TextView" parent="Widget.MaterialComponents.Snackbar.TextView">
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- Progress bar-->
+    <style name="Theme.AstronomyPicture.CircularProgressIndicator" parent="Widget.MaterialComponents.CircularProgressIndicator">
+        <item name="android:indeterminateTint">@color/primary_color</item>
     </style>
 </resources>
