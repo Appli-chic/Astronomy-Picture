@@ -31,16 +31,24 @@ class EntryDetailFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        // Load the entry from the date
-        val date = Calendar.getInstance()
-        date.timeInMillis = args.time
-        viewModel.setDate(date)
-
         val appCompatActivity = activity as AppCompatActivity?
-        appCompatActivity?.setSupportActionBar(binding.toolbar)
-        appCompatActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        appCompatActivity?.supportActionBar?.setDisplayShowHomeEnabled(true)
-        setHasOptionsMenu(true)
+
+        // Add back button if the instance is the first page and get the entry from the date
+        if (!args.isFirstPage) {
+            // Load the entry from the date
+            val date = Calendar.getInstance()
+            date.timeInMillis = args.time
+            viewModel.setDate(date)
+
+            appCompatActivity?.setSupportActionBar(binding.toolbar)
+            appCompatActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            appCompatActivity?.supportActionBar?.setDisplayShowHomeEnabled(true)
+            setHasOptionsMenu(true)
+        } else {
+            // Load the entry for today
+            val date = Calendar.getInstance()
+            viewModel.setDate(date)
+        }
 
         viewModel.entryQuery.observe(viewLifecycleOwner, { response ->
             // Load the url from the cache

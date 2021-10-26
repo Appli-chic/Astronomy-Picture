@@ -12,10 +12,12 @@ import org.junit.runner.RunWith
 
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 
 import com.applichic.astronomypicture.R
 import com.applichic.astronomypicture.utils.RecyclerViewItemCountAssertion
-import com.applichic.astronomypicture.utils.atPosition
+import org.hamcrest.CoreMatchers.not
+import org.junit.Before
 import java.util.*
 
 
@@ -24,15 +26,20 @@ class EntryListFragmentTest {
     @get:Rule
     var rule = activityScenarioRule<MainActivity>()
 
+    @Before
+    fun jumpToThePage() {
+        onView(withId(R.id.main_entry_list))
+            .perform(click())
+    }
+
     @Test
     fun onDisplayingEntries() {
         // Check if the list of entries is displayed
         onView(withId(R.id.recycler_view_photos))
             .check(matches(isDisplayed()))
 
-        // Check if the first element of the list is displayed
-        onView(withId(R.id.recycler_view_photos))
-            .check(matches(atPosition(0, withId(R.id.image_grid_entry))))
+        // Check the progress bar is not displayed anymore
+        onView(withId(R.id.progress_bar_entries)).check(matches(not(isDisplayed())))
 
         // Check the amount of entries in the list
         val today = Calendar.getInstance()

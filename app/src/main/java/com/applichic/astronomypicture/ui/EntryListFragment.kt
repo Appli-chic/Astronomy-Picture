@@ -18,6 +18,7 @@ import com.applichic.astronomypicture.viewmodel.EntryListViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.recyclerview.widget.RecyclerView
+import com.applichic.astronomypicture.utils.network.Resource
 
 
 @AndroidEntryPoint
@@ -25,6 +26,7 @@ class EntryListFragment : Fragment() {
     private lateinit var binding: FragmentEntryListBinding
 
     private val viewModel: EntryListViewModel by viewModels()
+    private lateinit var adapter: EntryGridAdapter
 
     private var pastVisibleItems: Int = 0
     private var visibleItemCount: Int = 0
@@ -36,8 +38,8 @@ class EntryListFragment : Fragment() {
     ): View {
         binding = FragmentEntryListBinding.inflate(inflater, container, false)
 
-        val adapter = EntryGridAdapter(activity as AppCompatActivity)
         val layoutManager = GridLayoutManager(context, 3)
+        adapter = EntryGridAdapter(activity as AppCompatActivity)
         binding.recyclerViewPhotos.adapter = adapter
         binding.recyclerViewPhotos.layoutManager = layoutManager
 
@@ -49,7 +51,7 @@ class EntryListFragment : Fragment() {
                     totalItemCount = layoutManager.itemCount
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
 
-                    if (!viewModel.isLoading) {
+                    if (viewModel.isLoading.value!!) {
                         if (visibleItemCount + pastVisibleItems >= totalItemCount) {
                             viewModel.loadMore()
                         }
@@ -61,32 +63,46 @@ class EntryListFragment : Fragment() {
         // Load the entries
         viewModel.entriesQuery.observe(viewLifecycleOwner, { response ->
             if (response.status == Status.ERROR) {
-                binding.progressBarEntries.visibility = View.GONE
-                viewModel.isLoading = false
+                viewModel.stopLoading()
                 showErrorLoading()
             }
 
-            if ((response.status == Status.SUCCESS || response.status == Status.LOADING) &&
-                response.data != null && response.data.isNotEmpty()
-            ) {
-                binding.progressBarEntries.visibility = View.GONE
-                viewModel.isLoading = false
-
-                val displayableDataList = getEntriesToDisplay(response.data)
-                for (entry in displayableDataList) {
-                    val index = viewModel.entries.indexOfFirst { it.date == entry.date }
-                    if (index != -1) {
-                        viewModel.entries[index] = entry
-                    } else {
-                        viewModel.entries.add(entry)
-                    }
+            if (response.status == Status.LOADING) {
+                if (response.data != null && response.data.isNotEmpty() && response.data.size > 1) {
+                    viewModel.stopLoading()
+                    addEntriesToList(response)
                 }
+            }
 
-                adapter.submitList(viewModel.entries)
+            if (response.status == Status.SUCCESS && response.data != null && response.data.isNotEmpty()) {
+                viewModel.stopLoading()
+                addEntriesToList(response)
+            }
+        })
+
+        viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
+            if (isLoading) {
+                binding.progressBarEntries.visibility = View.VISIBLE
+            } else {
+                binding.progressBarEntries.visibility = View.GONE
             }
         })
 
         return binding.root
+    }
+
+    private fun addEntriesToList(response: Resource<List<Entry>>) {
+        val displayableDataList = getEntriesToDisplay(response.data!!)
+        for (entry in displayableDataList) {
+            val index = viewModel.entries.indexOfFirst { it.date == entry.date }
+            if (index != -1) {
+                viewModel.entries[index] = entry
+            } else {
+                viewModel.entries.add(entry)
+            }
+        }
+
+        adapter.submitList(viewModel.entries)
     }
 
     /**

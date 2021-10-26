@@ -20,7 +20,7 @@ fun bindEntryImage(view: ImageView, entry: Entry?) {
     )
     drawable.centerRadius = 50f
     drawable.strokeWidth = 8f
-    drawable.start();
+    drawable.start()
 
     if(entry != null) {
         // Displays the image

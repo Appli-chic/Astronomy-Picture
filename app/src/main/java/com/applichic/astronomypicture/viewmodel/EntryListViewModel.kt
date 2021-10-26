@@ -19,7 +19,8 @@ class EntryListViewModel @Inject internal constructor(
         set(Calendar.SECOND, 59)
     }
 
-    var isLoading = false
+    private val _isLoading = MutableLiveData(true)
+    var isLoading: LiveData<Boolean> = _isLoading
 
     private val _page = MutableLiveData(1)
     val page: LiveData<Int> = _page
@@ -51,12 +52,16 @@ class EntryListViewModel @Inject internal constructor(
         }
 
     fun reloadEntries() {
-        isLoading = true
+        _isLoading.value = true
         _page.value = page.value
     }
 
     fun loadMore() {
-        isLoading = true
+        _isLoading.value = true
         _page.value = page.value?.plus(1)
+    }
+
+    fun stopLoading() {
+        _isLoading.value = false
     }
 }

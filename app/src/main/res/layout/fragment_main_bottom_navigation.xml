@@ -8,25 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            app:elevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:theme="@style/Theme.AstronomyPicture.AppBarOverlay">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="@string/app_name" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/main_bottom_navigation_host"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -36,7 +17,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appbar"
+            app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/main_bottom_navigation_graph" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

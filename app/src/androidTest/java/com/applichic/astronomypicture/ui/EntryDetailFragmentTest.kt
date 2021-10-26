@@ -2,6 +2,7 @@ package com.applichic.astronomypicture.ui
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -20,7 +21,19 @@ class EntryDetailFragmentTest {
     var rule = activityScenarioRule<MainActivity>()
 
     @Test
+    fun checkIsTheFirstPage() {
+        // Check if the page is loaded
+        onView(withId(R.id.title))
+            .check(ViewAssertions.matches(isDisplayed()))
+    }
+
+    @Test
     fun jumpToEntryDetail() {
+        // Jump to the page with the list of entries
+        onView(withId(R.id.main_entry_list))
+            .perform(ViewActions.click())
+
+        // Click on an element
         onView(withId(R.id.recycler_view_photos)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 0,
