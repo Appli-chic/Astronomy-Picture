@@ -23,12 +23,19 @@ import java.util.*
 interface EntryApi {
 
     @GET("apod")
-    fun getEntries(
+    fun getEntriesByPeriod(
         @Query("api_key") clientId: String = BuildConfig.ACCESS_KEY,
         @Query("start_date") startDate: String,
         @Query("end_date") endDate: String,
         @Query("thumbs") thumbs: Boolean = true,
     ): LiveData<ApiResponse<List<Entry>>>
+
+    @GET("apod")
+    fun getEntryByDate(
+        @Query("api_key") clientId: String = BuildConfig.ACCESS_KEY,
+        @Query("date") date: String,
+        @Query("thumbs") thumbs: Boolean = true,
+    ): LiveData<ApiResponse<Entry>>
 
     companion object {
         fun create(): EntryApi {

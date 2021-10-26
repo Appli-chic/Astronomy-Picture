@@ -30,9 +30,27 @@ class EntryRepository @Inject constructor(
             override fun loadFromDb() = entryDao.getFromPeriod(startDate, endDate)
 
             override fun createCall(): LiveData<ApiResponse<List<Entry>>> {
-                return entryApi.getEntries(
+                return entryApi.getEntriesByPeriod(
                     startDate = DateConverter.calendarToDateString(startDate),
                     endDate = DateConverter.calendarToDateString(endDate),
+                )
+            }
+        }.asLiveData()
+    }
+
+    fun getFromDate(date: Calendar): LiveData<Resource<Entry>> {
+        return object : NetworkBoundResource<Entry, Entry>(appExecutors) {
+            override fun saveCallResult(item: Entry) {
+                entryDao.insert(item)
+            }
+
+            override fun shouldFetch(data: Entry?) = true
+
+            override fun loadFromDb() = entryDao.getFromDate(date)
+
+            override fun createCall(): LiveData<ApiResponse<Entry>> {
+                return entryApi.getEntryByDate(
+                    date = DateConverter.calendarToDateString(date),
                 )
             }
         }.asLiveData()

@@ -11,13 +11,26 @@
         android:label="fragment_main_bottom_navigation"
         tools:layout="@layout/fragment_main_bottom_navigation" >
         <action
-            android:id="@+id/action_mainBottomNavigationFragment_to_entryDetailFragment"
-            app:destination="@id/entryDetailFragment" />
+            android:id="@+id/action_detail_entry"
+            app:destination="@id/entryDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/entryDetailFragment"
         android:name="com.applichic.astronomypicture.ui.EntryDetailFragment"
         android:label="fragment_entry_detail"
-        tools:layout="@layout/fragment_entry_detail" />
+        tools:layout="@layout/fragment_entry_detail" >
+        <argument
+            android:name="time"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <argument
+            android:name="isFirstPage"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
 
 </navigation>

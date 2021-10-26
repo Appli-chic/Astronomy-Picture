@@ -7,6 +7,7 @@ import com.applichic.astronomypicture.utils.network.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class EntryListViewModel @Inject internal constructor(
@@ -18,12 +19,14 @@ class EntryListViewModel @Inject internal constructor(
         set(Calendar.SECOND, 59)
     }
 
-    var isLoading = false
+    private val _isLoading = MutableLiveData(true)
+    var isLoading: LiveData<Boolean> = _isLoading
 
     private val _page = MutableLiveData(1)
     val page: LiveData<Int> = _page
 
-    val entries: LiveData<Resource<List<Entry>>> = Transformations
+    val entries = ArrayList<Entry>()
+    val entriesQuery: LiveData<Resource<List<Entry>>> = Transformations
         .switchMap(_page) { page ->
             val startDate = Calendar.getInstance().apply {
                 set(Calendar.YEAR, today.get(Calendar.YEAR))
@@ -49,12 +52,16 @@ class EntryListViewModel @Inject internal constructor(
         }
 
     fun reloadEntries() {
-        isLoading = true
+        _isLoading.value = true
         _page.value = page.value
     }
 
     fun loadMore() {
-        isLoading = true
+        _isLoading.value = true
         _page.value = page.value?.plus(1)
+    }
+
+    fun stopLoading() {
+        _isLoading.value = false
     }
 }

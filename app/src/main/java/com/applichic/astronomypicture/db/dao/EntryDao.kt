@@ -13,6 +13,12 @@ interface EntryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(entries: List<Entry>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(entry: Entry)
+
     @Query("SELECT * FROM entries WHERE date BETWEEN :startDate AND :endDate order by date DESC")
     fun getFromPeriod(startDate: Calendar, endDate: Calendar): LiveData<List<Entry>>
+
+    @Query("SELECT * FROM entries WHERE date = :date")
+    fun getFromDate(date: Calendar): LiveData<Entry>
 }

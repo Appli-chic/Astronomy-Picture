@@ -155,8 +155,30 @@ class EntryDaoTest {
     }
 
     @Test
+    fun getFromDate() = runBlocking {
+        var entry = entryDao.getFromDate(dateA).getOrAwaitValue()
+        assertThat(entry, equalTo(entryA))
+
+        entry = entryDao.getFromDate(dateB).getOrAwaitValue()
+        assertThat(entry, equalTo(entryB))
+
+        entry = entryDao.getFromDate(dateC).getOrAwaitValue()
+        assertThat(entry, equalTo(entryC))
+    }
+
+    @Test
     fun insertAll() = runBlocking {
         entryDao.insertAll(listOf(entryD, entryE))
+        val entries = entryDao.getFromPeriod(dateC, dateB).getOrAwaitValue()
+
+        // Make sure the entryD doesn't count like a new entry because it has the same date as entry A
+        assertThat(entries.size, equalTo(4))
+    }
+
+    @Test
+    fun insert() = runBlocking {
+        entryDao.insert(entryD)
+        entryDao.insert(entryE)
         val entries = entryDao.getFromPeriod(dateC, dateB).getOrAwaitValue()
 
         // Make sure the entryD doesn't count like a new entry because it has the same date as entry A
