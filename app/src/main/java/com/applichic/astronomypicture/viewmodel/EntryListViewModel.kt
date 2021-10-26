@@ -7,6 +7,7 @@ import com.applichic.astronomypicture.utils.network.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class EntryListViewModel @Inject internal constructor(
@@ -23,7 +24,8 @@ class EntryListViewModel @Inject internal constructor(
     private val _page = MutableLiveData(1)
     val page: LiveData<Int> = _page
 
-    val entries: LiveData<Resource<List<Entry>>> = Transformations
+    val entries = ArrayList<Entry>()
+    val entriesQuery: LiveData<Resource<List<Entry>>> = Transformations
         .switchMap(_page) { page ->
             val startDate = Calendar.getInstance().apply {
                 set(Calendar.YEAR, today.get(Calendar.YEAR))

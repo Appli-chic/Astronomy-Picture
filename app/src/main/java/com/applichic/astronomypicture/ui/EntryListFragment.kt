@@ -59,7 +59,7 @@ class EntryListFragment : Fragment() {
         })
 
         // Load the entries
-        viewModel.entries.observe(viewLifecycleOwner, { response ->
+        viewModel.entriesQuery.observe(viewLifecycleOwner, { response ->
             if (response.status == Status.ERROR) {
                 binding.progressBarEntries.visibility = View.GONE
                 viewModel.isLoading = false
@@ -72,13 +72,17 @@ class EntryListFragment : Fragment() {
                 binding.progressBarEntries.visibility = View.GONE
                 viewModel.isLoading = false
 
-                if (adapter.itemCount == 0) {
-                    adapter.submitList(getEntriesToDisplay(response.data))
-                } else {
-                    val newList = getEntriesToDisplay(response.data)
-                    newList.addAll(0, adapter.currentList)
-                    adapter.submitList(newList)
+                val displayableDataList = getEntriesToDisplay(response.data)
+                for (entry in displayableDataList) {
+                    val index = viewModel.entries.indexOfFirst { it.date == entry.date }
+                    if (index != -1) {
+                        viewModel.entries[index] = entry
+                    } else {
+                        viewModel.entries.add(entry)
+                    }
                 }
+
+                adapter.submitList(viewModel.entries)
             }
         })
 
@@ -105,14 +109,14 @@ class EntryListFragment : Fragment() {
      * Displays a snack bar to show an error happened while loading the entries
      */
     private fun showErrorLoading() {
-        val snackbar =
+        val snackBar =
             Snackbar.make(binding.root, R.string.network_error_message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.retry) {
                     // Retry to load entries
                     viewModel.reloadEntries()
                 }
 
-        snackbar.anchorView = activity?.findViewById(R.id.bottom_navigation)
-        snackbar.show()
+        snackBar.anchorView = activity?.findViewById(R.id.bottom_navigation)
+        snackBar.show()
     }
 }

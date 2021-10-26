@@ -11,13 +11,18 @@
         android:label="fragment_main_bottom_navigation"
         tools:layout="@layout/fragment_main_bottom_navigation" >
         <action
-            android:id="@+id/action_mainBottomNavigationFragment_to_entryDetailFragment"
+            android:id="@+id/action_detail_entry"
             app:destination="@id/entryDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/entryDetailFragment"
         android:name="com.applichic.astronomypicture.ui.EntryDetailFragment"
         android:label="fragment_entry_detail"
-        tools:layout="@layout/fragment_entry_detail" />
+        tools:layout="@layout/fragment_entry_detail" >
+        <argument
+            android:name="time"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
 
 </navigation>

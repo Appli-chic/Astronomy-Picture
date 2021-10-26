@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.applichic.astronomypicture.viewmodel.EntryGridViewModel" />
@@ -12,7 +11,7 @@
     <ImageView
         android:id="@+id/image_grid_entry"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="@dimen/entry_photo_height"
         android:layout_margin="3dp"
         android:contentDescription="@string/description_photo_space"
         android:onClick="@{viewModel.onPictureClicked}"

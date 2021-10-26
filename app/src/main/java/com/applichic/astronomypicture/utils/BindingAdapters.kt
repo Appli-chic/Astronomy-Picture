@@ -12,7 +12,7 @@ import com.applichic.astronomypicture.db.model.MediaType
 
 
 @BindingAdapter("imageFromEntry")
-fun bindEntryImage(view: ImageView, entry: Entry) {
+fun bindEntryImage(view: ImageView, entry: Entry?) {
     // Create a loader
     val drawable = CircularProgressDrawable(view.context)
     drawable.setColorSchemeColors(
@@ -22,23 +22,25 @@ fun bindEntryImage(view: ImageView, entry: Entry) {
     drawable.strokeWidth = 8f
     drawable.start();
 
-    // Displays the image
-    if (entry.mediaType == MediaType.Image && entry.url.isNotEmpty()) {
-        Glide.with(view.context)
-            .load(entry.url)
-            .placeholder(drawable)
-            .error(R.drawable.ic_broken_image)
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(view)
-    }
+    if(entry != null) {
+        // Displays the image
+        if (entry.mediaType == MediaType.Image && entry.url.isNotEmpty()) {
+            Glide.with(view.context)
+                .load(entry.url)
+                .placeholder(drawable)
+                .error(R.drawable.ic_broken_image)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(view)
+        }
 
-    // Displays the video's thumbnails
-    if (entry.mediaType == MediaType.Video && !entry.thumbnailUrl.isNullOrEmpty()) {
-        Glide.with(view.context)
-            .load(entry.thumbnailUrl)
-            .placeholder(drawable)
-            .error(R.drawable.ic_broken_image)
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(view)
+        // Displays the video's thumbnails
+        if (entry.mediaType == MediaType.Video && !entry.thumbnailUrl.isNullOrEmpty()) {
+            Glide.with(view.context)
+                .load(entry.thumbnailUrl)
+                .placeholder(drawable)
+                .error(R.drawable.ic_broken_image)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(view)
+        }
     }
 }
