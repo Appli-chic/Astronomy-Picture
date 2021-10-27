@@ -21,5 +21,14 @@ class DateConverter {
         fun calendarToDateString(value: Calendar): String {
             return format.format(value.time)
         }
+
+        fun adaptToNasaTimeZone(date: Calendar) {
+            val timeZone = date.timeZone
+            val nasaTimeZone = TimeZone.getTimeZone("GMT-4")
+            date.add(
+                Calendar.HOUR_OF_DAY, (nasaTimeZone.getOffset(Calendar.getInstance().timeInMillis) -
+                        timeZone.getOffset(Calendar.getInstance().timeInMillis)) / 1000 / 60 / 60
+            )
+        }
     }
 }
