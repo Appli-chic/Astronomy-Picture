@@ -1,12 +1,12 @@
 package com.applichic.astronomypicture.db.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.applichic.astronomypicture.api.EntryApi
 import com.applichic.astronomypicture.db.dao.EntryDao
 import com.applichic.astronomypicture.db.model.Entry
 import com.applichic.astronomypicture.di.AppExecutors
 import com.applichic.astronomypicture.utils.ApiResponse
-import com.applichic.astronomypicture.utils.ApiSuccessResponse
 import com.applichic.astronomypicture.utils.DateConverter
 import com.applichic.astronomypicture.utils.network.NetworkBoundResource
 import com.applichic.astronomypicture.utils.network.Resource
@@ -56,5 +56,26 @@ class EntryRepository @Inject constructor(
             }
 
         }.asLiveData()
+    }
+
+    fun getAllFavorites(): LiveData<Resource<List<Entry>>> {
+        return object : NetworkBoundResource<List<Entry>, List<Entry>>(appExecutors) {
+
+            override fun saveCallResult(item: List<Entry>) {
+            }
+
+            override fun shouldFetch(data: List<Entry>?) = true
+
+            override fun loadFromDb() = entryDao.getAllFavorites()
+
+            override fun createCall(): LiveData<ApiResponse<List<Entry>>> {
+                return MutableLiveData()
+            }
+
+        }.asLiveData()
+    }
+
+    fun updateEntry(entry: Entry) {
+        entryDao.update(entry)
     }
 }

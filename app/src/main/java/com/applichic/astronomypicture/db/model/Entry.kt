@@ -28,11 +28,14 @@ data class Entry(
     @field:SerializedName("hdurl")
     val hdUrl: String?,
 
-    @ColumnInfo(name =  "media_type")
-    @field:SerializedName( "media_type")
+    @ColumnInfo(name = "media_type")
+    @field:SerializedName("media_type")
     val mediaType: MediaType?,
 
-    @ColumnInfo(name =  "thumbnail_url")
-    @field:SerializedName( "thumbnail_url")
-    val thumbnailUrl: String?
+    @ColumnInfo(name = "thumbnail_url")
+    @field:SerializedName("thumbnail_url")
+    val thumbnailUrl: String?,
+
+    @ColumnInfo(name = "is_favorite")
+    val isFavorite: Boolean = false
 )

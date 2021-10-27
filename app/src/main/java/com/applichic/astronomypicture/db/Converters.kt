@@ -7,8 +7,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Converters {
-    private val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-
     @TypeConverter
     fun dateStringToCalendar(value: String): Calendar {
         return DateConverter.dateStringToCalendar(value)

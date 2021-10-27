@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.applichic.astronomypicture.db.model.Entry
 import com.applichic.astronomypicture.db.repository.EntryRepository
+import com.applichic.astronomypicture.di.AppExecutors
 import com.applichic.astronomypicture.utils.network.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EntryDetailViewModel @Inject internal constructor(
-    entryRepository: EntryRepository,
+    val entryRepository: EntryRepository,
+    private val appExecutors: AppExecutors
 ) : ViewModel() {
     private val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
     private val _date = MutableLiveData<Calendar>(null)
@@ -37,10 +39,23 @@ class EntryDetailViewModel @Inject internal constructor(
 
     val dateString: LiveData<String> = Transformations
         .switchMap(_entry) { value ->
-            if(value?.date?.time != null) {
+            if (value?.date?.time != null) {
                 MutableLiveData(dateFormat.format(value.date.time))
             } else {
                 MutableLiveData("")
             }
         }
+
+    fun updateFavorite(isFavorite: Boolean) {
+        appExecutors.diskIO().execute {
+            val updatedEntry = entry.value?.copy(isFavorite = isFavorite)
+            if (updatedEntry != null) {
+                entryRepository.updateEntry(updatedEntry)
+
+                appExecutors.mainThread().execute {
+                    _entry.value = updatedEntry
+                }
+            }
+        }
+    }
 }
