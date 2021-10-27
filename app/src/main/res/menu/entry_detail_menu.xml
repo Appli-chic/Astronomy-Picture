@@ -5,6 +5,13 @@
         android:id="@+id/favorite"
         android:enabled="true"
         android:icon="@drawable/ic_favorite_outlined"
-        app:showAsAction="always"
-        android:title="@string/favorites"/>
+        android:title="@string/favorite"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/calendar"
+        android:enabled="true"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/move_date"
+        app:showAsAction="always" />
 </menu>
