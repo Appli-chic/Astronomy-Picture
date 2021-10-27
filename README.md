@@ -1,4 +1,4 @@
-# Astronomy Picture
+# 🔭 Astronomy Picture
 
 Astronomy Picture est une application android écrite pour répondre à un test technique.
 
@@ -8,11 +8,11 @@ API: https://api.nasa.gov/
 
 APK: ![APK](./medias/astronomy_picture.apk)
 
-# Démonstration
+# 🎦 Démonstration
 
 ![presentation](./medias/demo.gif)
 
-# Fonctionnalités
+# 🧰 Fonctionnalités
 
 * Affiche le média du jour avec un détail sur la première page
 * Visualiser la liste des médias (avec thumbnail pour les vidéos) du mois
@@ -24,7 +24,7 @@ APK: ![APK](./medias/astronomy_picture.apk)
 * Afficher la liste des médias favoris trié par date de parution
 * Ouvrir un calendrier pour chercher le média d'une journée précisé par l'utilisateur
 
-# Technique
+# 🛠️ Technique
 
 L'application est développée en Kotlin, MVVM, architecture composante.
 
@@ -40,7 +40,7 @@ J'ai utilisé les librairies suivantes:
 * Piasy
 * Espresso (Tests)
 
-# Design
+# ✒️ Design
 
 Une fois avoir reçu le sujet, ma première étape a été de créer des idées de design sur Figma.
 
@@ -48,7 +48,7 @@ J'ai choisis un thème sombre et une police qui rappelle l'espace pour que l'app
 
 ![figma](./medias/figma.png)
 
-# GIT
+# 🔗 GIT
 
 Le premier commit du repository a été la création globale de l'architecture de l'application.
 
@@ -56,7 +56,7 @@ J'ai suivi par la suite Gitflow pour la gestion des branches et des Pull request
 
 ![GIT](./medias/git.png)
 
-# Tests
+# 🧪 Tests
 
 Pour s'assurer un minimum de la qualité de l'application j'ai créé des tests automatiques JUnit et Espresso tout au long du développement.
 
