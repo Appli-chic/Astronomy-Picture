@@ -3,11 +3,17 @@
     <style name="Base.Theme.AstronomyPicture" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorAccent">@color/primary_color</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/caption_color</item>
+        <item name="android:textColor">@color/white</item>
         <item name="colorSurface">@color/surface</item>
         <item name="android:windowBackground">@color/surface</item>
         <item name="fontFamily">@font/space_grotesque</item>
+        <item name="colorControlActivated">@color/primary_color</item>
+        <item name="colorControlHighlight">@color/primary_color</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/Theme.AstronomyPicture.Text</item>
@@ -18,13 +24,15 @@
         <item name="snackbarButtonStyle">@style/Theme.AstronomyPicture.Snackbar.textButton</item>
 
         <!-- Progress bar-->
-        <item name="circularProgressIndicatorStyle">@style/Theme.AstronomyPicture.CircularProgressIndicator</item>
+        <item name="circularProgressIndicatorStyle">
+            @style/Theme.AstronomyPicture.CircularProgressIndicator
+        </item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/surface</item>
     </style>
 
-    <style name="Theme.AstronomyPicture" parent="Base.Theme.AstronomyPicture"/>*
+    <style name="Theme.AstronomyPicture" parent="Base.Theme.AstronomyPicture" />
 
     <!-- Text -->
     <style name="Theme.AstronomyPicture.Text" parent="@android:style/TextAppearance">

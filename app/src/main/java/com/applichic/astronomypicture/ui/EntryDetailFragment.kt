@@ -1,5 +1,6 @@
 package com.applichic.astronomypicture.ui
 
+import android.R.attr
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -16,9 +17,17 @@ import com.applichic.astronomypicture.utils.network.Status
 import com.applichic.astronomypicture.viewmodel.EntryDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import android.R.attr.startYear
+
+import com.applichic.astronomypicture.MainActivity
+
+import android.app.DatePickerDialog
+import android.widget.DatePicker
+import com.google.android.material.snackbar.Snackbar
+
 
 @AndroidEntryPoint
-class EntryDetailFragment : Fragment() {
+class EntryDetailFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private lateinit var binding: FragmentEntryDetailBinding
     private val viewModel: EntryDetailViewModel by viewModels()
     private val args: EntryDetailFragmentArgs by navArgs()
@@ -41,11 +50,15 @@ class EntryDetailFragment : Fragment() {
         loadEntry()
 
         viewModel.entryQuery.observe(viewLifecycleOwner, { response ->
-            //TODO: Manage the error
+            if (response.status == Status.ERROR) {
+                viewModel.setLoading(false)
+                showErrorLoading()
+            }
 
             // Load the url from the cache
             if (response.status == Status.LOADING && response.data != null) {
                 viewModel.setEntry(response?.data)
+                viewModel.setLoading(false)
 
                 if (appBarMenu != null) {
                     setMenuFavorite(appBarMenu!!)
@@ -54,6 +67,7 @@ class EntryDetailFragment : Fragment() {
 
             if (response.status == Status.SUCCESS && response.data != null) {
                 viewModel.setEntry(response?.data)
+                viewModel.setLoading(false)
 
                 if (appBarMenu != null) {
                     setMenuFavorite(appBarMenu!!)
@@ -111,6 +125,19 @@ class EntryDetailFragment : Fragment() {
         return binding.root
     }
 
+    private fun showErrorLoading() {
+        val snackBar =
+            Snackbar.make(binding.root, R.string.network_error_message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry) {
+                    val date = Calendar.getInstance()
+                    date.timeInMillis = args.time
+                    viewModel.setDate(date)
+                }
+
+        snackBar.anchorView = activity?.findViewById(R.id.bottom_navigation)
+        snackBar.show()
+    }
+
     private fun loadEntry() {
         val appCompatActivity = activity as AppCompatActivity?
 
@@ -136,6 +163,49 @@ class EntryDetailFragment : Fragment() {
         }
     }
 
+    /**
+     * Start the date picker
+     */
+    private fun selectDate() {
+        if (viewModel.entry.value != null) {
+            val date = viewModel.entry.value!!.date
+            val datePicker = DatePickerDialog(
+                requireContext(),
+                this,
+                date.get(Calendar.YEAR),
+                date.get(Calendar.MONTH),
+                date.get(Calendar.DAY_OF_MONTH)
+            )
+
+            val today = Calendar.getInstance()
+            DateConverter.adaptToNasaTimeZone(today)
+
+            datePicker.datePicker.maxDate = today.timeInMillis
+            datePicker.show()
+        }
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        // Move to another Entry Detail with the specified date
+        val day = Calendar.getInstance().apply {
+            set(Calendar.YEAR, year)
+            set(Calendar.MONTH, month)
+            set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        }
+
+        val navHostFragment =
+            activity?.supportFragmentManager?.findFragmentById(R.id.nav_host) as NavHostFragment?
+        val navController = navHostFragment?.navController
+
+        if (args.isFirstPage) {
+            val action = MainBottomNavigationFragmentDirections.actionDetailEntry(day.timeInMillis)
+            navController?.navigate(action)
+        } else {
+            val action = EntryDetailFragmentDirections.actionDetailEntry(day.timeInMillis)
+            navController?.navigate(action)
+        }
+    }
+
     private fun setMenuFavorite(menu: Menu) {
         if (viewModel.entry.value != null) {
             val item = menu.findItem(R.id.favorite)
@@ -155,17 +225,23 @@ class EntryDetailFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            findNavController().popBackStack()
-        } else if (item.itemId == R.id.favorite) {
-            if (viewModel.entry.value != null) {
-                if (viewModel.entry.value?.isFavorite == true) {
-                    item.setIcon(R.drawable.ic_favorite_outlined)
-                } else {
-                    item.setIcon(R.drawable.ic_favorite)
-                }
+        when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().popBackStack()
+            }
+            R.id.favorite -> {
+                if (viewModel.entry.value != null) {
+                    if (viewModel.entry.value?.isFavorite == true) {
+                        item.setIcon(R.drawable.ic_favorite_outlined)
+                    } else {
+                        item.setIcon(R.drawable.ic_favorite)
+                    }
 
-                viewModel.updateFavorite(!viewModel.entry.value?.isFavorite!!)
+                    viewModel.updateFavorite(!viewModel.entry.value?.isFavorite!!)
+                }
+            }
+            R.id.calendar -> {
+                selectDate()
             }
         }
 

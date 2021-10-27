@@ -21,6 +21,9 @@ class EntryDetailViewModel @Inject internal constructor(
     private val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
     private val _date = MutableLiveData<Calendar>(null)
 
+    private val _isLoading = MutableLiveData(true)
+    var isLoading: LiveData<Boolean> = _isLoading
+
     private val _entry = MutableLiveData<Entry?>(null)
     var entry: LiveData<Entry?> = _entry
 
@@ -30,11 +33,16 @@ class EntryDetailViewModel @Inject internal constructor(
         }
 
     fun setDate(value: Calendar) {
+        _isLoading.value = true
         _date.value = value
     }
 
     fun setEntry(value: Entry) {
         _entry.value = value
+    }
+
+    fun setLoading(value: Boolean) {
+        _isLoading.value = value
     }
 
     val dateString: LiveData<String> = Transformations

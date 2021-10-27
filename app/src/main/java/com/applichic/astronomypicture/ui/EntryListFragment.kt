@@ -65,6 +65,10 @@ class EntryListFragment : Fragment() {
             if (response.status == Status.ERROR) {
                 viewModel.stopLoading()
                 showErrorLoading()
+
+                if (viewModel.entries.isNotEmpty() && adapter.itemCount == 0) {
+                    adapter.submitList(viewModel.entries)
+                }
             }
 
             if (response.status == Status.LOADING && response.data != null && response.data.isNotEmpty() &&
