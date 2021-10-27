@@ -19,6 +19,7 @@ import retrofit2.http.Query
 import com.google.gson.GsonBuilder
 
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 interface EntryApi {
 
@@ -53,7 +54,10 @@ interface EntryApi {
                 )
                 .create()
 
-            val client = OkHttpClient.Builder()
+            val client = OkHttpClient
+                .Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
                 .addInterceptor(logger)
                 .build()
 
