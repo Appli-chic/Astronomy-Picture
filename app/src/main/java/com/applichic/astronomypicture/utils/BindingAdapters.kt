@@ -1,6 +1,7 @@
 package com.applichic.astronomypicture.utils
 
 import android.net.Uri
+import android.webkit.WebView
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.applichic.astronomypicture.R
@@ -11,9 +12,6 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.applichic.astronomypicture.db.model.Entry
 import com.applichic.astronomypicture.db.model.MediaType
 import com.github.piasy.biv.view.BigImageView
-
-
-
 
 
 @BindingAdapter("imageFromEntry")
@@ -56,5 +54,14 @@ fun bindEntryPreviewImage(view: BigImageView, url: String, hdUrl: String?) {
         view.showImage(Uri.parse(url), Uri.parse(hdUrl))
     } else {
         view.showImage(Uri.parse(url))
+    }
+}
+
+@BindingAdapter("url")
+fun bingUrlWebView(view: WebView, url: String) {
+    view.settings.javaScriptEnabled = true
+
+    if(view.url == null) {
+        view.loadUrl(url)
     }
 }

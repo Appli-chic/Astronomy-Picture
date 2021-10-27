@@ -1,29 +1,18 @@
 package com.applichic.astronomypicture.ui
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.applichic.astronomypicture.R
 import com.applichic.astronomypicture.databinding.FragmentImageViewerBinding
 import com.applichic.astronomypicture.viewmodel.ImageViewerViewModel
 import com.github.piasy.biv.loader.ImageLoader.Callback
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.lang.Exception
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-
-import com.github.piasy.biv.view.ImageSaveCallback
-import com.google.android.material.snackbar.Snackbar
-import java.util.concurrent.Executors
-
 
 @AndroidEntryPoint
 class ImageViewerFragment : Fragment() {
@@ -74,52 +63,12 @@ class ImageViewerFragment : Fragment() {
             }
         })
 
-        // Save the image
-        binding.previewImage.setImageSaveCallback(object : ImageSaveCallback {
-            override fun onSuccess(uri: String) {
-                Snackbar.make(binding.root, R.string.image_saved, Snackbar.LENGTH_LONG)
-                    .show()
-            }
-
-            override fun onFail(t: Throwable) {
-                t.printStackTrace()
-                Snackbar.make(binding.root, R.string.error_save_image, Snackbar.LENGTH_LONG)
-                    .show()
-            }
-        })
-
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.image_viewer_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             findNavController().popBackStack()
-        } else if (item.itemId == R.id.image_viewer_save) {
-            // Save the image and ask for the permissions
-            if (ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    1
-                )
-            }
-
-            Executors.newSingleThreadExecutor().execute {
-                requireActivity().runOnUiThread {
-                    binding.previewImage.saveImageIntoGallery()
-                }
-            }
-
-
         }
 
         return super.onOptionsItemSelected(item)

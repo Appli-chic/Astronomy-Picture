@@ -14,11 +14,7 @@ import kotlin.collections.ArrayList
 class EntryListViewModel @Inject internal constructor(
     entryRepository: EntryRepository,
 ) : ViewModel() {
-    private val today = Calendar.getInstance().apply {
-        set(Calendar.HOUR_OF_DAY, 0)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.SECOND, 0)
-    }
+    private val today = Calendar.getInstance()
 
     private val _isLoading = MutableLiveData(true)
     var isLoading: LiveData<Boolean> = _isLoading

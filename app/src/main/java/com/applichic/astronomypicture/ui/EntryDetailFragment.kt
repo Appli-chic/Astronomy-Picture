@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.applichic.astronomypicture.R
+import com.applichic.astronomypicture.db.model.MediaType
 import com.applichic.astronomypicture.utils.DateConverter
 import com.applichic.astronomypicture.utils.network.Status
 import com.applichic.astronomypicture.viewmodel.EntryDetailViewModel
@@ -77,25 +78,47 @@ class EntryDetailFragment : Fragment() {
 
         // On the click on the media
         binding.imageEntry.setOnClickListener {
-            if (viewModel.entry.value != null) {
+            if (viewModel.entry.value != null && viewModel.entry.value!!.mediaType != null) {
                 val navHostFragment =
                     activity?.supportFragmentManager?.findFragmentById(R.id.nav_host) as NavHostFragment?
                 val navController = navHostFragment?.navController
 
                 if (args.isFirstPage) {
-                    val action = MainBottomNavigationFragmentDirections.actionImageViewer(
-                        viewModel.entry.value!!.url,
-                        viewModel.entry.value!!.hdUrl
-                    )
+                    when (viewModel.entry.value!!.mediaType) {
+                        MediaType.Image -> {
+                            val action = MainBottomNavigationFragmentDirections.actionImageViewer(
+                                viewModel.entry.value!!.url,
+                                viewModel.entry.value!!.hdUrl
+                            )
 
-                    navController?.navigate(action)
+                            navController?.navigate(action)
+                        }
+                        MediaType.Video -> {
+                            val action = MainBottomNavigationFragmentDirections.actionVideoViewer(
+                                viewModel.entry.value!!.url,
+                            )
+
+                            navController?.navigate(action)
+                        }
+                    }
                 } else {
-                    val action = EntryDetailFragmentDirections.actionImageViewer(
-                        viewModel.entry.value!!.url,
-                        viewModel.entry.value!!.hdUrl
-                    )
+                    when (viewModel.entry.value!!.mediaType) {
+                        MediaType.Image -> {
+                            val action = EntryDetailFragmentDirections.actionImageViewer(
+                                viewModel.entry.value!!.url,
+                                viewModel.entry.value!!.hdUrl
+                            )
 
-                    navController?.navigate(action)
+                            navController?.navigate(action)
+                        }
+                        MediaType.Video -> {
+                            val action = EntryDetailFragmentDirections.actionVideoViewer(
+                                viewModel.entry.value!!.url,
+                            )
+
+                            navController?.navigate(action)
+                        }
+                    }
                 }
             }
         }
