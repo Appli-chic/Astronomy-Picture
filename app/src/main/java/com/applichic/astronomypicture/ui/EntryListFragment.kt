@@ -37,6 +37,8 @@ class EntryListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEntryListBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         val layoutManager = GridLayoutManager(context, 3)
         adapter = EntryGridAdapter(activity as AppCompatActivity)
@@ -51,7 +53,7 @@ class EntryListFragment : Fragment() {
                     totalItemCount = layoutManager.itemCount
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
 
-                    if (viewModel.isLoading.value!!) {
+                    if (!viewModel.isLoadingMore.value!!) {
                         if (visibleItemCount + pastVisibleItems >= totalItemCount) {
                             viewModel.loadMore()
                         }
@@ -81,14 +83,6 @@ class EntryListFragment : Fragment() {
             if (response.status == Status.SUCCESS && response.data != null && response.data.isNotEmpty()) {
                 viewModel.stopLoading()
                 addEntriesToList(response)
-            }
-        })
-
-        viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
-            if (isLoading) {
-                binding.progressBarEntries.visibility = View.VISIBLE
-            } else {
-                binding.progressBarEntries.visibility = View.GONE
             }
         })
 
