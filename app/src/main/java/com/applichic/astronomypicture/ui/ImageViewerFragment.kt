@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.lang.Exception
 import android.content.ContentValues
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -30,12 +31,15 @@ import java.net.URL
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
 import com.google.android.material.snackbar.Snackbar
 
+const val REQUEST_CODE_PERMISSION_STORAGE = 1
 
 @AndroidEntryPoint
 class ImageViewerFragment : Fragment() {
-    private val _tag = "ImageViewerFragment"
+    private val TAG = "ImageViewerFragment"
 
     private lateinit var binding: FragmentImageViewerBinding
     private val viewModel: ImageViewerViewModel by viewModels()
@@ -108,8 +112,21 @@ class ImageViewerFragment : Fragment() {
     }
 
     private fun downloadImage(url: String) {
-        Thread {
-            try {
+        // Check the permission
+        if (checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                REQUEST_CODE_PERMISSION_STORAGE
+            )
+        } else {
+            // Start to download the image
+            Thread {
                 // Create a snack bar to notify the image is being downloaded
                 val snackBar =
                     Snackbar.make(
@@ -119,16 +136,19 @@ class ImageViewerFragment : Fragment() {
                     )
                 snackBar.show()
 
-                // Create the Image from the URL
-                val uri = URL(url)
-                val policy = ThreadPolicy.Builder().permitAll().build()
-                StrictMode.setThreadPolicy(policy)
-                val image = BitmapFactory.decodeStream(uri.openConnection().getInputStream())
-                saveMediaToStorage(image, snackBar)
-            } catch (e: IOException) {
-                e.message?.let { Log.e(_tag, it) }
-            }
-        }.start()
+                try {
+                    // Create the Image from the URL
+                    val uri = URL(url)
+                    val policy = ThreadPolicy.Builder().permitAll().build()
+                    StrictMode.setThreadPolicy(policy)
+                    val image = BitmapFactory.decodeStream(uri.openConnection().getInputStream())
+                    saveMediaToStorage(image, snackBar)
+                } catch (e: IOException) {
+                    snackBar.dismiss()
+                    e.message?.let { Log.e(TAG, it) }
+                }
+            }.start()
+        }
     }
 
     private fun saveMediaToStorage(bitmap: Bitmap, snackBar: Snackbar) {
@@ -160,7 +180,6 @@ class ImageViewerFragment : Fragment() {
         outputStream?.use {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
             snackBar.dismiss()
-
 
             // Notify the image has been downloaded
             Snackbar.make(binding.root, R.string.image_downloaded, Snackbar.LENGTH_LONG).show()
