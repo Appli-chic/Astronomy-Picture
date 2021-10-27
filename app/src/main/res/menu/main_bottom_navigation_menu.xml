@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/main_entry_list"
+        android:id="@+id/main_today"
         android:enabled="true"
-        android:icon="@drawable/ic_photo"
-        android:title="Photos"/>
+        android:icon="@drawable/ic_today"
+        android:title="@string/today"/>
 
     <item
-        android:id="@+id/main_favorite"
+        android:id="@+id/main_entry_list"
+        android:enabled="true"
+        android:icon="@drawable/ic_gallery"
+        android:title="@string/gallery"/>
+
+    <item
+        android:id="@+id/main_favorite_list"
         android:enabled="true"
         android:icon="@drawable/ic_favorite"
-        android:title="Favoris"/>
+        android:title="@string/favorites"/>
 </menu>

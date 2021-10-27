@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Astronomy Picture</string>
+    <string name="today">Today</string>
+    <string name="gallery">Gallery</string>
+    <string name="favorites">Favorites</string>
+    <string name="favorite">Favorite</string>
+    <string name="move_date">Move to another date</string>
+    <string name="description_photo_space">Photo of astronomy</string>
+    <string name="description_icon_video_play">Play icon to notify the media is a video</string>
+    <string name="retry">Retry</string>
+    <string name="network_error_message">Impossible to retrieve data from the server</string>
+    <string name="no_copyright">No copyright</string>
+    <string name="download">Download</string>
+    <string name="downloading_in_progress">Downloading…</string>
+    <string name="image_downloaded">The image had been downloaded</string>
 </resources>

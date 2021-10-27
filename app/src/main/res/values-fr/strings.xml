@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Astronomy Picture</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="gallery">Galerie</string>
+    <string name="favorites">Favoris</string>
+    <string name="favorite">Favoris</string>
+    <string name="move_date">Bouger vers une autre date</string>
+    <string name="description_photo_space">Photo d\'astronomie</string>
+    <string name="description_icon_video_play">Icône pour notifier que c\'est une vidéo</string>
+    <string name="retry">Réessayer</string>
+    <string name="network_error_message">Impossible de récupérer les informations du serveur</string>
+    <string name="no_copyright">Pas de droit d\'auteur</string>
+    <string name="download">Télécharger</string>
+    <string name="downloading_in_progress">Téléchargement…</string>
+    <string name="image_downloaded">L\'image a été téléchargé</string>
+</resources>

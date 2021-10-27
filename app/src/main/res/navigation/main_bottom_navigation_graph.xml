@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_bottom_navigation_graph"
+    app:startDestination="@id/main_today">
+
+    <fragment
+        android:id="@+id/main_today"
+        android:name="com.applichic.astronomypicture.ui.EntryDetailFragment"
+        android:label="fragment_entry_detail"
+        tools:layout="@layout/fragment_entry_detail">
+        <argument
+            android:name="time"
+            android:defaultValue="0L"
+            app:argType="long" />
+
+        <argument
+            android:name="isFirstPage"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/main_entry_list"
+        android:name="com.applichic.astronomypicture.ui.EntryListFragment"
+        android:label="fragment_entry_list"
+        tools:layout="@layout/fragment_entry_list" />
+
+    <fragment
+        android:id="@+id/main_favorite_list"
+        android:name="com.applichic.astronomypicture.ui.FavoriteListFragment"
+        android:label="fragment_favorite_list"
+        tools:layout="@layout/fragment_favorite_list" />
+
+</navigation>

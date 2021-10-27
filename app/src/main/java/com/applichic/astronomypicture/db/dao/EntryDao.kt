@@ -1,17 +1,27 @@
 package com.applichic.astronomypicture.db.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.applichic.astronomypicture.db.model.Entry
+import java.util.*
 
 @Dao
 interface EntryDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(entries: List<Entry>)
 
-    @Query("SELECT * FROM entries")
-    fun getAll(): LiveData<List<Entry>>
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(entry: Entry)
+
+    @Query("SELECT * FROM entries WHERE date BETWEEN :startDate AND :endDate ORDER BY date DESC")
+    fun getFromPeriod(startDate: Calendar, endDate: Calendar): LiveData<List<Entry>>
+
+    @Query("SELECT * FROM entries WHERE date = :date")
+    fun getFromDate(date: Calendar): LiveData<Entry>
+
+    @Query("SELECT * FROM entries WHERE is_favorite = true ORDER BY date DESC")
+    fun getAllFavorites(): LiveData<List<Entry>>
+
+    @Update()
+    fun update(entry: Entry)
 }

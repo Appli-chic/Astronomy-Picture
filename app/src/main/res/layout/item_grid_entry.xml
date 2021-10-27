@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.applichic.astronomypicture.db.model.MediaType" />
+
+        <variable
+            name="viewModel"
+            type="com.applichic.astronomypicture.viewmodel.EntryGridViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/entry_photo_height">
+
+        <ImageView
+            android:id="@+id/image_grid_entry"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/entry_photo_height"
+            android:layout_margin="3dp"
+            android:contentDescription="@string/description_photo_space"
+            android:onClick="@{viewModel.onPictureClicked}"
+            android:scaleType="center"
+            app:imageFromEntry="@{viewModel.entry}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_grid_video_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/description_icon_video_play"
+            android:visibility="@{viewModel.entry.mediaType == MediaType.Video ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/image_grid_entry"
+            app:layout_constraintEnd_toEndOf="@+id/image_grid_entry"
+            app:layout_constraintStart_toStartOf="@+id/image_grid_entry"
+            app:layout_constraintTop_toTopOf="@+id/image_grid_entry"
+            app:srcCompat="@drawable/ic_play_video" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
