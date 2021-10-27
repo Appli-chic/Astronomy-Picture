@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable/ic_broken_image.xml" value="0.3958974358974359" />
+        <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable/ic_favorite.xml" value="0.40260416666666665" />
+        <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable/ic_favorite_outlined.xml" value="0.40260416666666665" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable/ic_photo.xml" value="0.38796296296296295" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/layout/activity_main.xml" value="0.1884498480243161" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/layout/fragment_entry_detail.xml" value="0.1" />
@@ -14,6 +16,7 @@
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/layout/fragment_video_v_iewer.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/layout/fragment_video_viewer.xml" value="0.2171875" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/layout/item_grid_entry.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/menu/entry_detail_menu.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/menu/image_viewer_menu.xml" value="0.3875" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/menu/main_bottom_navigation_menu.xml" value="0.38153846153846155" />
       </map>

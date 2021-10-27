@@ -67,11 +67,11 @@ class EntryListFragment : Fragment() {
                 showErrorLoading()
             }
 
-            if (response.status == Status.LOADING) {
-                if (response.data != null && response.data.isNotEmpty() && response.data.size > 1) {
-                    viewModel.stopLoading()
-                    addEntriesToList(response)
-                }
+            if (response.status == Status.LOADING && response.data != null && response.data.isNotEmpty() &&
+                response.data.size > 1
+            ) {
+                viewModel.stopLoading()
+                addEntriesToList(response)
             }
 
             if (response.status == Status.SUCCESS && response.data != null && response.data.isNotEmpty()) {

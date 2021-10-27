@@ -83,7 +83,8 @@ class EntryDaoTest {
         "https://apod.nasa.gov/apod/image/1803/AstroSoM/hudf.html",
         null,
         MediaType.Video,
-        null
+        null,
+        true
     )
 
     private val entryC = Entry(
@@ -94,7 +95,8 @@ class EntryDaoTest {
         "https://apod.nasa.gov/apod/image/2108/PerseusFireball_Dandan_960.jpg",
         "https://apod.nasa.gov/apod/image/2108/PerseusFireball_Dandan_1125.jpg",
         MediaType.Image,
-        null
+        null,
+        true
     )
 
     private val entryD = Entry(
@@ -164,6 +166,16 @@ class EntryDaoTest {
 
         entry = entryDao.getFromDate(dateC).getOrAwaitValue()
         assertThat(entry, equalTo(entryC))
+    }
+
+    @Test
+    fun getAllFavorites() = runBlocking {
+        val entries = entryDao.getAllFavorites().getOrAwaitValue()
+        assertThat(entries.size, equalTo(2))
+
+        // Check the entries are correct and in the right order
+        assertThat(entries[0], equalTo(entryB))
+        assertThat(entries[1], equalTo(entryC))
     }
 
     @Test
