@@ -10,4 +10,7 @@
     <string name="retry">Retry</string>
     <string name="network_error_message">Impossible to retrieve data from the server</string>
     <string name="no_copyright">No copyright</string>
+    <string name="download">Download</string>
+    <string name="downloading_in_progress">Downloading…</string>
+    <string name="image_downloaded">The image had been downloaded</string>
 </resources>

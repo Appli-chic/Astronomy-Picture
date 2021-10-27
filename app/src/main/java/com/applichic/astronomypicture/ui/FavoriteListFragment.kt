@@ -31,6 +31,12 @@ class FavoriteListFragment : Fragment() {
         binding.recyclerViewFavorites.layoutManager = layoutManager
 
         viewModel.favorites.observe(viewLifecycleOwner, { response ->
+            binding.imageNoData.visibility = View.GONE
+
+            if (response.status == Status.LOADING && (response.data == null || response.data.isEmpty())) {
+                binding.imageNoData.visibility = View.VISIBLE
+            }
+
             if (response.status == Status.LOADING && response.data != null && response.data.isNotEmpty()) {
                 adapter.submitList(response.data)
             }

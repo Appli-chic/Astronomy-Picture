@@ -16,6 +16,9 @@ import com.github.piasy.biv.view.BigImageView
 
 @BindingAdapter("imageFromEntry")
 fun bindEntryImage(view: ImageView, entry: Entry?) {
+    // To avoid images to be recycled
+    view.setImageDrawable(null)
+
     // Create a loader
     val drawable = CircularProgressDrawable(view.context)
     drawable.setColorSchemeColors(
@@ -61,7 +64,7 @@ fun bindEntryPreviewImage(view: BigImageView, url: String, hdUrl: String?) {
 fun bingUrlWebView(view: WebView, url: String) {
     view.settings.javaScriptEnabled = true
 
-    if(view.url == null) {
+    if (view.url == null) {
         view.loadUrl(url)
     }
 }

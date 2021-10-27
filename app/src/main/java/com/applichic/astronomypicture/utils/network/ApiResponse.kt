@@ -1,7 +1,10 @@
 package com.applichic.astronomypicture.utils
 
+import android.util.Log
 import retrofit2.Response
 import java.util.regex.Pattern
+
+const val apiResponseTag = "ApiResponse"
 
 @Suppress("unused")
 sealed class ApiResponse<T> {
@@ -57,7 +60,7 @@ data class ApiSuccessResponse<T>(
                 try {
                     Integer.parseInt(matcher.group(1))
                 } catch (ex: NumberFormatException) {
-                    //TODO: Add a log
+                    ex.message?.let { Log.e(apiResponseTag, it) }
                     null
                 }
             }

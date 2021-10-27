@@ -64,12 +64,16 @@ class EntryListFragment : Fragment() {
 
         // Load the entries
         viewModel.entriesQuery.observe(viewLifecycleOwner, { response ->
+            binding.imageNoData.visibility = View.GONE
+
             if (response.status == Status.ERROR) {
                 viewModel.stopLoading()
                 showErrorLoading()
 
                 if (viewModel.entries.isNotEmpty() && adapter.itemCount == 0) {
                     adapter.submitList(viewModel.entries)
+                } else {
+                    binding.imageNoData.visibility = View.VISIBLE
                 }
             }
 

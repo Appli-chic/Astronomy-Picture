@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EntryDetailViewModel @Inject internal constructor(
-    val entryRepository: EntryRepository,
+    private val entryRepository: EntryRepository,
     private val appExecutors: AppExecutors
 ) : ViewModel() {
     private val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
