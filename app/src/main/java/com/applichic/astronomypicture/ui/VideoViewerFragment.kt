@@ -1,17 +1,15 @@
 package com.applichic.astronomypicture.ui
 
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.applichic.astronomypicture.R
 import com.applichic.astronomypicture.databinding.FragmentVideoViewerBinding
 import com.applichic.astronomypicture.viewmodel.VideoViewerViewModel
 import dagger.hilt.android.AndroidEntryPoint

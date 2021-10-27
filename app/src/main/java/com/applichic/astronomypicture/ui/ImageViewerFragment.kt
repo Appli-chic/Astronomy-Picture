@@ -35,7 +35,7 @@ import com.google.android.material.snackbar.Snackbar
 
 @AndroidEntryPoint
 class ImageViewerFragment : Fragment() {
-    private val TAG = "ImageViewerFragment"
+    private val _tag = "ImageViewerFragment"
 
     private lateinit var binding: FragmentImageViewerBinding
     private val viewModel: ImageViewerViewModel by viewModels()
@@ -126,7 +126,7 @@ class ImageViewerFragment : Fragment() {
                 val image = BitmapFactory.decodeStream(uri.openConnection().getInputStream())
                 saveMediaToStorage(image, snackBar)
             } catch (e: IOException) {
-                e.message?.let { Log.e(TAG, it) }
+                e.message?.let { Log.e(_tag, it) }
             }
         }.start()
     }
@@ -160,7 +160,7 @@ class ImageViewerFragment : Fragment() {
         outputStream?.use {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
             snackBar.dismiss()
-            
+
 
             // Notify the image has been downloaded
             Snackbar.make(binding.root, R.string.image_downloaded, Snackbar.LENGTH_LONG).show()

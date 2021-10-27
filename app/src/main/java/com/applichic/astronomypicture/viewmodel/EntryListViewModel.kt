@@ -23,7 +23,7 @@ class EntryListViewModel @Inject internal constructor(
     var isLoadingMore: LiveData<Boolean> = _isLoadingMore
 
     private val _page = MutableLiveData(1)
-    val page: LiveData<Int> = _page
+    private val page: LiveData<Int> = _page
 
     val entries = ArrayList<Entry>()
     val entriesQuery: LiveData<Resource<List<Entry>>> = Transformations

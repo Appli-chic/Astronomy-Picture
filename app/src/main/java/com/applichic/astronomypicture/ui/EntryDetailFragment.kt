@@ -1,29 +1,24 @@
 package com.applichic.astronomypicture.ui
 
-import android.R.attr
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
-import com.applichic.astronomypicture.databinding.FragmentEntryDetailBinding
+import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.applichic.astronomypicture.R
+import com.applichic.astronomypicture.databinding.FragmentEntryDetailBinding
 import com.applichic.astronomypicture.db.model.MediaType
 import com.applichic.astronomypicture.utils.DateConverter
 import com.applichic.astronomypicture.utils.network.Status
 import com.applichic.astronomypicture.viewmodel.EntryDetailViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import android.R.attr.startYear
-
-import com.applichic.astronomypicture.MainActivity
-
-import android.app.DatePickerDialog
-import android.widget.DatePicker
-import com.google.android.material.snackbar.Snackbar
 
 
 @AndroidEntryPoint
@@ -50,9 +45,15 @@ class EntryDetailFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         loadEntry()
 
         viewModel.entryQuery.observe(viewLifecycleOwner, { response ->
+            binding.imageNoData.visibility = View.GONE
+
             if (response.status == Status.ERROR) {
                 viewModel.setLoading(false)
                 showErrorLoading()
+
+                if (viewModel.entry.value == null) {
+                    binding.imageNoData.visibility = View.VISIBLE
+                }
             }
 
             // Load the url from the cache

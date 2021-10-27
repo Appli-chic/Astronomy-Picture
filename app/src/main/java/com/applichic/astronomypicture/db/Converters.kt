@@ -3,7 +3,6 @@ package com.applichic.astronomypicture.db
 import androidx.room.TypeConverter
 import com.applichic.astronomypicture.db.model.MediaType
 import com.applichic.astronomypicture.utils.DateConverter
-import java.text.SimpleDateFormat
 import java.util.*
 
 class Converters {

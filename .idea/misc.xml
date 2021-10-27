@@ -3,10 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable/ic_broken_image.xml" value="0.3958974358974359" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable/ic_download.xml" value="0.40260416666666665" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable/ic_favorite.xml" value="0.40260416666666665" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable/ic_favorite_outlined.xml" value="0.40260416666666665" />
+        <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable/ic_launcher_background.xml" value="0.40260416666666665" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/drawable/ic_photo.xml" value="0.38796296296296295" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/layout/activity_main.xml" value="0.1884498480243161" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/layout/fragment_entry_detail.xml" value="0.1" />
@@ -20,6 +22,8 @@
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/menu/entry_detail_menu.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/menu/image_viewer_menu.xml" value="0.3875" />
         <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/menu/main_bottom_navigation_menu.xml" value="0.38153846153846155" />
+        <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/Lazyos/Desktop/Programmation/android/AstronomyPicture/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.23333333333333334" />
       </map>
     </option>
   </component>
