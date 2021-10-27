@@ -63,7 +63,7 @@
 
     <!-- Snack bar -->
     <style name="Theme.AstronomyPicture.Snackbar" parent="Widget.MaterialComponents.Snackbar">
-        <item name="backgroundTint">@color/surface</item>
+        <item name="backgroundTint">@color/secondary_surface</item>
         <item name="actionTextColorAlpha">1</item>
     </style>
 

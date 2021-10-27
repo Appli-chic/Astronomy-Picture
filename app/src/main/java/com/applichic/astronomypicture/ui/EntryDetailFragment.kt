@@ -193,16 +193,22 @@ class EntryDetailFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             set(Calendar.DAY_OF_MONTH, dayOfMonth)
         }
 
-        val navHostFragment =
-            activity?.supportFragmentManager?.findFragmentById(R.id.nav_host) as NavHostFragment?
-        val navController = navHostFragment?.navController
+        val entryDate = viewModel.entry.value
+        if (entryDate != null && (entryDate.date.get(Calendar.DAY_OF_YEAR) != day.get(Calendar.DAY_OF_YEAR) ||
+                    entryDate.date.get(Calendar.YEAR) != day.get(Calendar.YEAR))
+        ) {
+            val navHostFragment =
+                activity?.supportFragmentManager?.findFragmentById(R.id.nav_host) as NavHostFragment?
+            val navController = navHostFragment?.navController
 
-        if (args.isFirstPage) {
-            val action = MainBottomNavigationFragmentDirections.actionDetailEntry(day.timeInMillis)
-            navController?.navigate(action)
-        } else {
-            val action = EntryDetailFragmentDirections.actionDetailEntry(day.timeInMillis)
-            navController?.navigate(action)
+            if (args.isFirstPage) {
+                val action =
+                    MainBottomNavigationFragmentDirections.actionDetailEntry(day.timeInMillis)
+                navController?.navigate(action)
+            } else {
+                val action = EntryDetailFragmentDirections.actionDetailEntry(day.timeInMillis)
+                navController?.navigate(action)
+            }
         }
     }
 
