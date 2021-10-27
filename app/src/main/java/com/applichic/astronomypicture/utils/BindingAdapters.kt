@@ -1,5 +1,6 @@
 package com.applichic.astronomypicture.utils
 
+import android.net.Uri
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.applichic.astronomypicture.R
@@ -9,6 +10,10 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.applichic.astronomypicture.db.model.Entry
 import com.applichic.astronomypicture.db.model.MediaType
+import com.github.piasy.biv.view.BigImageView
+
+
+
 
 
 @BindingAdapter("imageFromEntry")
@@ -22,7 +27,7 @@ fun bindEntryImage(view: ImageView, entry: Entry?) {
     drawable.strokeWidth = 8f
     drawable.start()
 
-    if(entry != null) {
+    if (entry != null) {
         // Displays the image
         if (entry.mediaType == MediaType.Image && entry.url.isNotEmpty()) {
             Glide.with(view.context)
@@ -42,5 +47,14 @@ fun bindEntryImage(view: ImageView, entry: Entry?) {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(view)
         }
+    }
+}
+
+@BindingAdapter("url", "hdUrl")
+fun bindEntryPreviewImage(view: BigImageView, url: String, hdUrl: String?) {
+    if (hdUrl != null) {
+        view.showImage(Uri.parse(url), Uri.parse(hdUrl))
+    } else {
+        view.showImage(Uri.parse(url))
     }
 }

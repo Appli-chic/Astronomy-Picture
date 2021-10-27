@@ -3,6 +3,7 @@ package com.applichic.astronomypicture.viewmodel
 import androidx.lifecycle.*
 import com.applichic.astronomypicture.db.model.Entry
 import com.applichic.astronomypicture.db.repository.EntryRepository
+import com.applichic.astronomypicture.utils.DateConverter
 import com.applichic.astronomypicture.utils.network.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
@@ -14,9 +15,9 @@ class EntryListViewModel @Inject internal constructor(
     entryRepository: EntryRepository,
 ) : ViewModel() {
     private val today = Calendar.getInstance().apply {
-        set(Calendar.HOUR_OF_DAY, 23)
-        set(Calendar.MINUTE, 59)
-        set(Calendar.SECOND, 59)
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
     }
 
     private val _isLoading = MutableLiveData(true)
@@ -46,7 +47,11 @@ class EntryListViewModel @Inject internal constructor(
                     set(Calendar.MINUTE, 59)
                     set(Calendar.SECOND, 59)
                 }
+            } else {
+                // Adapt the date of today with the time zone of NASA
+                DateConverter.adaptToNasaTimeZone(endDate)
             }
+
 
             entryRepository.getFromPeriod(startDate, endDate)
         }

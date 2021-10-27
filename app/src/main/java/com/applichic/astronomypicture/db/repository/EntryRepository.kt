@@ -6,6 +6,7 @@ import com.applichic.astronomypicture.db.dao.EntryDao
 import com.applichic.astronomypicture.db.model.Entry
 import com.applichic.astronomypicture.di.AppExecutors
 import com.applichic.astronomypicture.utils.ApiResponse
+import com.applichic.astronomypicture.utils.ApiSuccessResponse
 import com.applichic.astronomypicture.utils.DateConverter
 import com.applichic.astronomypicture.utils.network.NetworkBoundResource
 import com.applichic.astronomypicture.utils.network.Resource
@@ -53,6 +54,7 @@ class EntryRepository @Inject constructor(
                     date = DateConverter.calendarToDateString(date),
                 )
             }
+
         }.asLiveData()
     }
 }
