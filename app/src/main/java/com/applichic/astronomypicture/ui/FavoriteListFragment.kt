@@ -37,11 +37,11 @@ class FavoriteListFragment : Fragment() {
                 binding.imageNoData.visibility = View.VISIBLE
             }
 
-            if (response.status == Status.LOADING && response.data != null && response.data.isNotEmpty()) {
+            if (response.status == Status.LOADING && response.data != null) {
                 adapter.submitList(response.data)
             }
 
-            if (response.status == Status.SUCCESS && response.data != null && response.data.isNotEmpty()) {
+            if (response.status == Status.SUCCESS && response.data != null) {
                 adapter.submitList(response.data)
             }
         })

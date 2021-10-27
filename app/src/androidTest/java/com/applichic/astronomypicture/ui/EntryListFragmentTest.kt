@@ -15,6 +15,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 
 import com.applichic.astronomypicture.R
+import com.applichic.astronomypicture.utils.DateConverter
 import com.applichic.astronomypicture.utils.RecyclerViewItemCountAssertion
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
@@ -43,6 +44,7 @@ class EntryListFragmentTest {
 
         // Check the amount of entries in the list
         val today = Calendar.getInstance()
+        DateConverter.adaptToNasaTimeZone(today)
         var nbDays = today.get(Calendar.DAY_OF_MONTH)
         today.add(Calendar.MONTH, -1)
         nbDays += today.getActualMaximum(Calendar.DATE)
