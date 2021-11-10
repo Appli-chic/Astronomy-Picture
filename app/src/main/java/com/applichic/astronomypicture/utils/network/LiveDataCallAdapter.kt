@@ -1,7 +1,6 @@
 package com.applichic.astronomypicture.utils.network
 
 import androidx.lifecycle.LiveData
-import com.applichic.astronomypicture.utils.ApiResponse
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Callback

@@ -22,6 +22,6 @@ interface EntryDao {
     @Query("SELECT * FROM entries WHERE is_favorite = 1 ORDER BY date DESC")
     fun getAllFavorites(): LiveData<List<Entry>>
 
-    @Update()
+    @Update
     fun update(entry: Entry)
 }

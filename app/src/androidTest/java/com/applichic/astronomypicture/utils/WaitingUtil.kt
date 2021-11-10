@@ -33,7 +33,6 @@ class ViewShownIdlingResource(private val viewMatcher: Matcher<View>) :
     }
 
     companion object {
-        private val TAG = ViewShownIdlingResource::class.java.simpleName
         private fun getView(viewMatcher: Matcher<View>): View? {
             return try {
                 val viewInteraction = onView(viewMatcher)
@@ -49,12 +48,3 @@ class ViewShownIdlingResource(private val viewMatcher: Matcher<View>) :
 }
 
 
-fun waitViewShown(matcher: Matcher<View>) {
-    val idlingResource: IdlingResource = ViewShownIdlingResource(matcher)
-    try {
-        IdlingRegistry.getInstance().register(idlingResource)
-        onView(matcher).check(matches(isDisplayed()))
-    } finally {
-        IdlingRegistry.getInstance().unregister(idlingResource)
-    }
-}

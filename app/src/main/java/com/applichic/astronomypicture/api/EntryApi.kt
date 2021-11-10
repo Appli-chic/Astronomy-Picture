@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.applichic.astronomypicture.BuildConfig
 import com.applichic.astronomypicture.db.model.Entry
 import com.applichic.astronomypicture.db.model.MediaType
-import com.applichic.astronomypicture.utils.ApiResponse
+import com.applichic.astronomypicture.utils.network.ApiResponse
 import com.applichic.astronomypicture.utils.BASE_URL
 import com.applichic.astronomypicture.utils.network.CalendarFromStringJsonDeserializer
 import com.applichic.astronomypicture.utils.network.LiveDataCallAdapterFactory

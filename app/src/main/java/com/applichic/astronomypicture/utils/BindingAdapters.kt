@@ -1,6 +1,7 @@
 package com.applichic.astronomypicture.utils
 
 import android.net.Uri
+import android.util.Log
 import android.webkit.WebView
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -11,7 +12,11 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.applichic.astronomypicture.db.model.Entry
 import com.applichic.astronomypicture.db.model.MediaType
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.piasy.biv.view.BigImageView
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
+import com.bumptech.glide.signature.ObjectKey
 
 
 @BindingAdapter("imageFromEntry")
@@ -35,7 +40,15 @@ fun bindEntryImage(view: ImageView, entry: Entry?) {
                 .load(entry.url)
                 .placeholder(drawable)
                 .error(R.drawable.ic_broken_image)
-                .transition(DrawableTransitionOptions.withCrossFade())
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .transition(DrawableTransitionOptions.with { dataSource, isFirstResource ->
+                    if (dataSource === DataSource.RESOURCE_DISK_CACHE)
+                        null
+                    else
+                        DrawableCrossFadeFactory.Builder(1000).build()
+                            .build(dataSource, isFirstResource)
+                })
+                .signature(ObjectKey(entry.url))
                 .into(view)
         }
 
@@ -45,7 +58,15 @@ fun bindEntryImage(view: ImageView, entry: Entry?) {
                 .load(entry.thumbnailUrl)
                 .placeholder(drawable)
                 .error(R.drawable.ic_broken_image)
-                .transition(DrawableTransitionOptions.withCrossFade())
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .transition(DrawableTransitionOptions.with { dataSource, isFirstResource ->
+                    if (dataSource === DataSource.RESOURCE_DISK_CACHE)
+                        null
+                    else
+                        DrawableCrossFadeFactory.Builder(1000).build()
+                            .build(dataSource, isFirstResource)
+                })
+                .signature(ObjectKey(entry.url))
                 .into(view)
         }
     }
