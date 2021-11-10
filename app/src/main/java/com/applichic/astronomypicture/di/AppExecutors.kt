@@ -27,10 +27,6 @@ class AppExecutors(
         return diskIO
     }
 
-    fun networkIO(): Executor {
-        return networkIO
-    }
-
     fun mainThread(): Executor {
         return mainThread
     }

@@ -19,6 +19,8 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.recyclerview.widget.RecyclerView
 import com.applichic.astronomypicture.utils.network.Resource
+import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
 
 
 @AndroidEntryPoint

@@ -15,23 +15,6 @@ import org.hamcrest.Matchers.`is`
 import org.hamcrest.BaseMatcher
 
 
-fun <T> first(matcher: Matcher<T>): Matcher<T> {
-    return object : BaseMatcher<T>() {
-        var isFirst = true
-        override fun matches(item: Any): Boolean {
-            if (isFirst && matcher.matches(item)) {
-                isFirst = false
-                return true
-            }
-            return false
-        }
-
-        override fun describeTo(description: Description) {
-            description.appendText("should return first matching item")
-        }
-    }
-}
-
 class RecyclerViewItemCountAssertion(private val expectedCount: Int) :
     ViewAssertion {
     override fun check(view: View, noViewFoundException: NoMatchingViewException?) {
@@ -44,18 +27,3 @@ class RecyclerViewItemCountAssertion(private val expectedCount: Int) :
     }
 }
 
-fun atPosition(position: Int, itemMatcher: Matcher<View?>): Matcher<View?> {
-    return object : BoundedMatcher<View?, RecyclerView>(RecyclerView::class.java) {
-        override fun describeTo(description: Description) {
-            description.appendText("has item at position $position: ")
-            itemMatcher.describeTo(description)
-        }
-
-        override fun matchesSafely(view: RecyclerView): Boolean {
-            val viewHolder = view.findViewHolderForAdapterPosition(position)
-                ?: // has no item on such position
-                return false
-            return itemMatcher.matches(viewHolder.itemView)
-        }
-    }
-}
